@@ -30,6 +30,19 @@ data RayData = NoHit
              | Shade Normal HitPoint
              deriving (Show, Eq)
 
+instance Vector Vector3D where
+    ($+) (Coord (a, b, c)) (Coord (d, e, f)) = Coord (a + d, b + e, c + f)
+
+    ($-) x (Coord (a, b, c)) = x $+ (Coord (-a, -b, -c))
+
+    ($*) x (Coord (a, b, c)) = Coord (x * a, x * b, x * c)
+
+    ($.) (Coord (a, b, c)) (Coord (d, e, f)) = a * d + b * e + c * f
+
+    ($/) x y = (1 / y) $* x
+
+    normalize x = x $/ (x $. x)
+
 -- Esta função faz o cálculo para verificar se algum raio atinge a esfera
 calc :: Ray -> Object -> RayData
 calc (Ray origin direction) (Sphere center radius) = if (disc > 0.0) then (Shade normal lhp) else NoHit
