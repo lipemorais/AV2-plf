@@ -1,6 +1,7 @@
 
 module Raytracer where
 
+import Data.List (intercalate)
 import Algebra
 
 -- Algumas definições de tipo
@@ -88,3 +89,9 @@ build_scene rays obj = map (\x -> coord_to_color (trace_ray (Ray x (Coord (0.0, 
 -- Converte a cor de Double para Integer
 coord_to_color :: Vector3D -> Vector3D
 coord_to_color (Coord (x, y, z)) = (Color (round x, round y, round z))
+
+build_complete_helper :: [Vector3D] -> [Object] -> [[Vector3D]]
+build_complete_helper rays objects = (map (build_scene rays) (objects))
+
+build_complete_scene :: [Vector3D] -> [Object] -> [Vector3D]
+build_complete_scene rays obj = intercalate [] (build_complete_helper (rays) (obj))

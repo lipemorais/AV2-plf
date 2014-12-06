@@ -17,4 +17,4 @@ save_ppm filename text = writeFile filename text
 
 objeto1 = Sphere (Coord (0,0,-300)) 200
 
-main = save_ppm "teste.ppm" (create_ppm hres vres (build_scene all_rays objeto1))
+main = save_ppm "teste.ppm" (create_ppm hres vres (build_complete_scene all_rays [objeto1]))
